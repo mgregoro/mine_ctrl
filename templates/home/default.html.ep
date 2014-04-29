@@ -1,0 +1,48 @@
+% layout 'default';
+% title 'MineCtrl Now w/ Websockets!';
+
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<div id="display" style="overflow: auto; max-height: 500px; font-family: courier">
+
+</div>
+
+<form id="command-box">
+    <input type="text" class="command-input" id="command" style="width: 80%"/>
+    <input type="submit" id="command-submit" value="Send"/>
+</form>
+
+<script>
+    function init_websocket() {
+        window.ws = new WebSocket('<%= $self->config->{websocket_url} %>');
+        ws.onopen = function(e) {
+            console.log("websocket established.");
+        }
+        ws.onmessage = function(e) {
+            if (e != undefined) {
+                if (e.data != undefined) {
+                    $('#display').append(e.data);
+                    $('#display').scrollTop($('#display')[0].scrollHeight);
+                }
+            }
+        }
+        ws.onclose = function(e) {
+            console.log("NO CARRIER");
+            setTimeout(function() {
+                init_websocket();
+            }, 3000);
+        }
+    }
+
+    $(function() {
+        init_websocket();
+        $('#command-box').submit(function(e) {
+            // it's this easy.
+            ws.send($('#command').val());
+            $('#command').val('');
+            $('#command')[0].focus();
+
+            e.preventDefault();
+        });
+        $('#command')[0].focus();
+    });
+</script>
