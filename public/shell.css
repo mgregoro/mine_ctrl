@@ -1,0 +1,27 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: #000000;
+    color: #ffffff;
+    font-family: courier;
+    font-size: 12px;
+}
+
+#container {
+    height: 97%;
+    max-height: 97%;
+}
+
+#display {
+    height: 100%;
+    padding: 2px;
+    overflow: auto;
+}
+
+#command {
+    padding: 1px;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+}
