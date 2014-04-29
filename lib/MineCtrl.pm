@@ -4,6 +4,8 @@ use IPC::Open2;
 use Mojo::IOLoop;
 use IO::Handle;
 
+use utf8;
+
 my ($pid, $jin, $jout, $config);
 
 # This method will run once at server start
